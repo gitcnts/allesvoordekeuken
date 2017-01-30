@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import be.vdab.repositories.ArtikelRepository;
+import be.vdab.services.ArtikelService;
 import be.vdab.util.StringUtils;
 
 /**
@@ -19,7 +19,7 @@ import be.vdab.util.StringUtils;
 public class ZoekenOpNummerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String VIEW = "/WEB-INF/JSP/artikels/zoekenopnummer.jsp";
-	private final transient ArtikelRepository artikelRepository = new ArtikelRepository();
+	private final transient ArtikelService artikelService = new ArtikelService();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -30,7 +30,7 @@ public class ZoekenOpNummerServlet extends HttpServlet {
 		if (request.getQueryString() != null) {
 			String idString = request.getParameter("id");
 			if (StringUtils.isLong(idString)) {
-				artikelRepository.read(Long.parseLong(idString))
+				artikelService.read(Long.parseLong(idString))
 				.ifPresent(artikel-> request.setAttribute("artikel",artikel));
 			} else {
 				request.setAttribute("fouten",
