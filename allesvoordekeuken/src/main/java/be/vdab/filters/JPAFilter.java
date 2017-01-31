@@ -17,9 +17,9 @@ import javax.servlet.annotation.WebFilter;
 @WebFilter("*.htm")
 public class JPAFilter implements Filter {
 	
-// de entityManagerFactory blijft in het RAM tijdens de hele levensduur van de website
-private static final EntityManagerFactory entityManagerFactory
+	private static final EntityManagerFactory entityManagerFactory
 						= Persistence.createEntityManagerFactory("allesvoordekeuken");
+	private static final ThreadLocal<EntityManager> entityManagers = new ThreadLocal<>();
 	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -28,17 +28,23 @@ private static final EntityManagerFactory entityManagerFactory
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");	// voor vreemde tekens op te vangen in de requests
-		chain.doFilter(request, response);
+		entityManagers.set(entityManagerFactory.createEntityManager());
+		try {
+			request.setCharacterEncoding("UTF-8");
+			chain.doFilter(request, response);
+		} finally {
+			entityManagers.get().close();
+			entityManagers.remove();
+		}
+	}
+	
+	public static EntityManager getEntityManager() {
+		return entityManagers.get();
 	}
 	
 	@Override
 	public void destroy() {
-		entityManagerFactory.close();	// sluit de database connection als de website stopt
-	}
-	
-	public static EntityManager getEntityManager() {
-		return entityManagerFactory.createEntityManager();
+		entityManagerFactory.close();
 	}
 	
 }
