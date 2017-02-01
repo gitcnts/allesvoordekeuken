@@ -1,5 +1,6 @@
 package be.vdab.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.PersistenceException;
@@ -24,6 +25,10 @@ public class ArtikelService extends AbstractService{
 			rollback();
 			throw ex;
 		}
+	}
+	
+	public List<Artikel> findArticleByName(String woord) {
+		return artikelRepository.findArticleByName(woord);
 	}
 
 }
