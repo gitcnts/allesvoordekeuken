@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import be.vdab.entities.Artikel;
+import be.vdab.entities.FoodArtikel;
+import be.vdab.entities.NonFoodArtikel;
 import be.vdab.services.ArtikelService;
 import be.vdab.util.StringUtils;
 
@@ -61,8 +63,47 @@ public class ToevoegenServlet extends HttpServlet {
 		} else {
 			fouten.put("verkoopprijs", "mag niet kleiner dan aankoopprijs zijn");
 		}
+		String soort = request.getParameter("soort");
+		long houdbaarheid = 0;
+		long garantie = 0;
+		if (soort == null) {
+			fouten.put("soort", "kies food of non-food");
+		} else {
+			switch (soort) {
+				case "F":
+					String houdbaarheidString = request.getParameter("houdbaarheid");
+					if(StringUtils.isLong(houdbaarheidString)) {
+						houdbaarheid = Long.parseLong(houdbaarheidString);
+						if ( ! FoodArtikel.isValidHoudbaarheid(houdbaarheid)) {
+							fouten.put("houdbaarheid", "moet ingevuld zijn bij food artikel");
+						}
+					} else {
+						fouten.put("houdbaarheid", "moet ingevuld zijn bij food artikel");
+					}
+					break;
+				case "NF":
+					String garantieString = request.getParameter("garantie");
+					if(StringUtils.isLong(garantieString)) {
+						garantie = Long.parseLong(garantieString);
+						if ( ! NonFoodArtikel.isValidGarantie(garantie)) {
+							fouten.put("garantie", "moet ingevuld zijn bij non-food artikel");
+						}
+					} else {
+						fouten.put("garantie", "moet ingevuld zijn bij non-food artikel");
+					}
+					break;
+				default:
+					fouten.put("soort", "kies food of non-food");
+					break;
+			}
+		}
 		if (fouten.isEmpty()) {
-			Artikel artikel = new Artikel(naam, aankoopprijs, verkoopprijs);
+			Artikel artikel = null;
+			if (soort.equals("F")) {
+				artikel = new FoodArtikel(naam, aankoopprijs, verkoopprijs, houdbaarheid);
+			} else {
+				artikel = new NonFoodArtikel(naam, aankoopprijs, verkoopprijs, garantie);	
+			}
 			artikelService.create(artikel);
 			response.sendRedirect(response.encodeRedirectURL(String.format(REDIRECT_URL,
 					request.getContextPath(), artikel.getId())));
