@@ -27,6 +27,9 @@ public class ArtikelRepository extends AbstractRepository {
 		.setParameter("factor", factor)
 		.executeUpdate();
 	}
-
+	
+	public List<Artikel> findAllSortedByName() {
+		return getEntityManager().createNamedQuery("Artikel.findAllSortedByName", Artikel.class).getResultList();
+	}
 
 }

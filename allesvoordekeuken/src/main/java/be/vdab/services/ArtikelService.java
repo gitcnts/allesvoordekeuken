@@ -43,6 +43,9 @@ public class ArtikelService extends AbstractService{
 			throw ex;
 		}
 	}
-
+	
+	public List<Artikel> findAllSortedByName() { 
+		return artikelRepository.findAllSortedByName();
+	}
 
 }
