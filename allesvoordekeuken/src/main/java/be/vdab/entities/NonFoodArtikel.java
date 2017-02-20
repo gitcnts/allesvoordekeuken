@@ -17,8 +17,8 @@ public class NonFoodArtikel extends Artikel {
 		super();
 	}
 
-	public NonFoodArtikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, long garantie) {
-		super(naam, aankoopprijs, verkoopprijs);
+	public NonFoodArtikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, long garantie, Artikelgroep artikelgroep) {
+		super(naam, aankoopprijs, verkoopprijs, artikelgroep);
 		setGarantie(garantie);
 	}
 

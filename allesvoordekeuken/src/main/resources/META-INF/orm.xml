@@ -16,10 +16,16 @@
 			update Artikel a
 			set a.verkoopprijs = a.verkoopprijs * :factor
 		</query>
-	</named-query>	
+	</named-query>
 	<named-query name='Artikel.findAllSortedByName'>
 		<query>
 			select a from Artikel a
+			order by a.naam
+		</query>
+	</named-query>
+	<named-query name="Artikelgroep.findAll">
+		<query>
+			select a from Artikelgroep a
 			order by a.naam
 		</query>
 	</named-query>
