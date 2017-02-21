@@ -106,6 +106,10 @@ public class ToevoegenServlet extends HttpServlet {
 		if (fouten.isEmpty()) {
 			Artikel artikel = null;
 			Artikelgroep artikelgroep = artikelgroepService.read(Long.parseLong(artikelgroepId)).get();
+			// onderstaande manier werkt hier niet: artikel is nog niet gemaakt en kan je dus ook niet gebruikten
+			// je kan het ook niet na de if/else zetten omdat het artikel binnen een conditie aangemaakt wordt en voor
+			// het aanmaken van het artikel, heb je de artikelgroep dan weer nodig.
+//			artikelgroepService.read(Long.parseLong(artikelgroepId)).ifPresent(artikelgroep -> artikel.setArtikelgroep(artikelgroep));
 			if (soort.equals("F")) {
 				artikel = new FoodArtikel(naam, aankoopprijs, verkoopprijs, houdbaarheid, artikelgroep);
 			} else {

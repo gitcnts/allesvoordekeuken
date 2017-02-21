@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import be.vdab.services.ArtikelgroepService;
 
-@WebServlet("/artikelperartikelgroep.htm")
+@WebServlet("/artikels/artikelperartikelgroep.htm")
 public class ArtikelPerArtikelgroepServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;	
-	private static final String VIEW = "/WEB-INF/JSP/artikels/artikelsperartikelgroep.jsp";
+	private static final String VIEW = "/WEB-INF/JSP/artikels/artikelperartikelgroep.jsp";
 	private final transient ArtikelgroepService artikelgroepService = new ArtikelgroepService();
 
 	@Override

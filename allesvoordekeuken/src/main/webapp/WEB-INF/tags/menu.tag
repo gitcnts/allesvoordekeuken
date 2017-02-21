@@ -7,7 +7,7 @@
 		<li><a href="<c:url value="/artikels/toevoegen.htm"/>">Artikel toevoegen</a></li>
 		<li><a href="<c:url value="/artikels/prijsverhoging.htm"/>">Prijsverhoging</a></li>
 		<li><a href="<c:url value="/artikels/kortingen.htm"/>">Artikelkortingen</a></li>
-		<li><a href="<c:url value="/artikels/perartikelgroep.htm"/>">Artikels per artikelgroep</a></li>
-		<li><a href="<c:url value="/artikels.htm"/>">Artikellijst</a></li>
+		<li><a href="<c:url value="/artikels/artikelperartikelgroep.htm"/>">Artikels per artikelgroep</a></li>
+		<li><a href="<c:url value="/artikels/artikels.htm"/>">Artikellijst</a></li>
 	</ul>
 </nav>

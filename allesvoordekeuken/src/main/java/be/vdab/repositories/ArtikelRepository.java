@@ -31,5 +31,11 @@ public class ArtikelRepository extends AbstractRepository {
 	public List<Artikel> findAllSortedByName() {
 		return getEntityManager().createNamedQuery("Artikel.findAllSortedByName", Artikel.class).getResultList();
 	}
+	
+	public List<Artikel> findAllMetArtikelgroep() {
+		return getEntityManager().createNamedQuery("Artikel.findAllSortedByName", Artikel.class)
+				.setHint("javax.persistence.loadgraph", getEntityManager().createEntityGraph(Artikel.MET_Artikelgroep))
+				.getResultList();
+	}
 
 }
